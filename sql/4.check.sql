@@ -1,4 +1,5 @@
 show databases;
+
 use db1;
 show tables;
 select count(*) from table1;
