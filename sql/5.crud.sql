@@ -1,3 +1,4 @@
+USE db1;
 -- 1. 最初の10件のデータをSELECT
 SELECT * FROM table1 WHERE id BETWEEN 1 AND 10;
 
@@ -12,18 +13,20 @@ DELETE FROM table1 WHERE id BETWEEN 1 AND 10;
 
 -- 5. DELETE後のデータをSELECT（データが削除されているか確認）
 SELECT * FROM table1 WHERE id BETWEEN 1 AND 10;
+
+
+USE cube;
 -- 1. 最初の10件のデータをSELECT
-USE `select`;
-SELECT * FROM `from` WHERE `key` BETWEEN 1 AND 10;
+SELECT * FROM empty WHERE lag BETWEEN 1 AND 10;
 
 -- 2. 最初の10件のvalueを"Updated Value"に変更するUPDATE
-UPDATE `from` SET `value` = CONCAT('Updated ', `value`) WHERE `key` BETWEEN 1 AND 10;
+UPDATE empty SET lead = CONCAT('lead', 'value') WHERE lag BETWEEN 1 AND 10;
 
 -- 3. UPDATE後のデータをSELECT
-SELECT * FROM `from` WHERE `key` BETWEEN 1 AND 10;
+SELECT * FROM empty WHERE lag BETWEEN 1 AND 10;
 
 -- 4. 最初の10件をDELETE
-DELETE FROM `from` WHERE `key` BETWEEN 1 AND 10;
+DELETE FROM empty WHERE lag BETWEEN 1 AND 10;
 
 -- 5. DELETE後のデータをSELECT（データが削除されているか確認）
-SELECT * FROM `from` WHERE `key` BETWEEN 1 AND 10;
+SELECT * FROM empty WHERE lag BETWEEN 1 AND 10;

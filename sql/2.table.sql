@@ -88,19 +88,11 @@ CREATE TABLE table10 (
 CREATE INDEX idx_transaction_user_id ON table10(user_id);
 
 -- 予約語を含むテーブル名を作成
-USE `select`;
-CREATE TABLE `from` (
-  `key` INT AUTO_INCREMENT PRIMARY KEY,
-  `value` VARCHAR(255)
+USE cube;
+CREATE TABLE empty (
+  lag INT AUTO_INCREMENT PRIMARY KEY,
+  lead VARCHAR(255),
+  of VARCHAR(255),
+  rank VARCHAR(255)
 );
-CREATE INDEX idx_key_value ON `from`(`value`);
-
--- 予約語を含むカラム名を持つテーブルを作成
-USE db1;
-CREATE TABLE `reserved_table` (
-  `index` INT AUTO_INCREMENT PRIMARY KEY,
-  `select` VARCHAR(255),
-  `from` VARCHAR(255),
-  `where` VARCHAR(255)
-);
-CREATE INDEX idx_reserved_select ON `reserved_table`(`select`);
+CREATE INDEX idx_reserved_select ON empty(lag);

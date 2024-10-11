@@ -1,3 +1,4 @@
+USE db1;
 -- db1のtable1に1000件のデータを挿入
 DELIMITER $$
 CREATE PROCEDURE insert_data_table1()
@@ -141,30 +142,18 @@ BEGIN
 END$$
 DELIMITER ;
 CALL insert_data_table10();
--- 予約語を使用したテーブルにもデータを挿入します
-USE `select`;
-DELIMITER $$
-CREATE PROCEDURE insert_data_from()
-BEGIN
-  DECLARE i INT DEFAULT 1;
-  WHILE i <= 1000 DO
-    INSERT INTO `from` (`value`) VALUES (CONCAT('Value', i));
-    SET i = i + 1;
-  END WHILE;
-END$$
-DELIMITER ;
-CALL insert_data_from();
 
-USE db1;
+-- 予約語を使用したテーブルにもデータを挿入
+USE cube;
 DELIMITER $$
-CREATE PROCEDURE insert_data_reserved_table()
+CREATE PROCEDURE insert_data_empty()
 BEGIN
   DECLARE i INT DEFAULT 1;
   WHILE i <= 1000 DO
-    INSERT INTO `reserved_table` (`select`, `from`, `where`) 
-    VALUES (CONCAT('SelectVal', i), CONCAT('FromVal', i), CONCAT('WhereVal', i));
+    INSERT INTO empty (lead, of, rank) 
+    VALUES (CONCAT('lead', i), CONCAT('of', i), CONCAT('rank', i));
     SET i = i + 1;
   END WHILE;
 END$$
 DELIMITER ;
-CALL insert_data_reserved_table();
+CALL insert_data_empty();
