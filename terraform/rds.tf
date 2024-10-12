@@ -1,20 +1,20 @@
-# Aurora MySQL用のDBクラスタパラメータグループの作成（デフォルト設定）
-resource "aws_rds_cluster_parameter_group" "aurora_mysql_param_group" {
-  name   = "aurora-mysql-cluster-param-group"
+# Aurora MySQL用のDBクラスタパラメータグループの作成
+resource "aws_rds_cluster_parameter_group" "aurora_mysql_param_group_57" {
+  name   = "aurora-mysql-cluster-param-group-57"
   family = "aurora-mysql5.7"
 
   tags = {
-    Name = "aurora-mysql-cluster-param-group"
+    Name = "aurora-mysql-cluster-param-group-57"
   }
 }
 
-# Aurora MySQL用のDBパラメータグループの作成（デフォルト設定）
-resource "aws_db_parameter_group" "aurora_mysql_db_param_group" {
-  name   = "aurora-mysql-db-param-group"
+# Aurora MySQL用のDBパラメータグループの作成
+resource "aws_db_parameter_group" "aurora_mysql_db_param_group_57" {
+  name   = "aurora-mysql-db-param-group-57"
   family = "aurora-mysql5.7"
 
   tags = {
-    Name = "aurora-mysql-db-param-group"
+    Name = "aurora-mysql-db-param-group-57"
   }
 }
 
@@ -32,7 +32,7 @@ resource "aws_rds_cluster" "aurora_mysql" {
   apply_immediately       = true
   storage_encrypted       = true
   skip_final_snapshot     = true
-  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.aurora_mysql_param_group.name
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.aurora_mysql_param_group_57.name
 
   # ログエクスポートの有効化
   enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
@@ -59,13 +59,9 @@ resource "aws_rds_cluster_instance" "write_instance" {
   instance_class          = "db.t3.medium"
   engine                  = "aurora-mysql"
   engine_version          = "5.7.mysql_aurora.2.11.5"
-  db_parameter_group_name = aws_db_parameter_group.aurora_mysql_db_param_group.name
+  db_parameter_group_name = aws_db_parameter_group.aurora_mysql_db_param_group_57.name
   publicly_accessible     = false
   apply_immediately       = true
-
-  # 拡張モニタリングを有効化
-  monitoring_interval     = 60 # 60秒間隔のモニタリング
-  monitoring_role_arn     = aws_iam_role.rds_monitoring_role.arn
 
   tags = {
     Name = "aurora-mysql-write-instance"
@@ -79,13 +75,9 @@ resource "aws_rds_cluster_instance" "read_instance" {
   instance_class          = "db.t3.medium"
   engine                  = "aurora-mysql"
   engine_version          = "5.7.mysql_aurora.2.11.5"
-  db_parameter_group_name = aws_db_parameter_group.aurora_mysql_db_param_group.name
+  db_parameter_group_name = aws_db_parameter_group.aurora_mysql_db_param_group_57.name
   publicly_accessible     = false
   apply_immediately       = true
-
-  # 拡張モニタリングを有効化
-  monitoring_interval     = 60
-  monitoring_role_arn     = aws_iam_role.rds_monitoring_role.arn
 
   tags = {
     Name = "aurora-mysql-read-instance"
@@ -116,30 +108,4 @@ resource "aws_security_group" "rds_sg" {
   tags = {
     Name = "aurora-mysql-sg"
   }
-}
-
-# IAM Role for RDS Enhanced Monitoring
-resource "aws_iam_role" "rds_monitoring_role" {
-  name = "rds-monitoring-role"
-
-  assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [{
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "monitoring.rds.amazonaws.com"
-      }
-    }]
-  })
-
-  tags = {
-    Name = "rds-monitoring-role"
-  }
-}
-
-# IAM Role Policy for Enhanced Monitoring
-resource "aws_iam_role_policy_attachment" "rds_monitoring_role_policy" {
-  role       = aws_iam_role.rds_monitoring_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }
