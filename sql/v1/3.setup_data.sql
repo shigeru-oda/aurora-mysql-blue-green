@@ -143,8 +143,8 @@ END$$
 DELIMITER ;
 CALL insert_data_table10();
 
--- 予約語を使用したテーブルにもデータを挿入
 USE cube;
+-- 予約語を使用したテーブルにもデータを挿入
 DELIMITER $$
 CREATE PROCEDURE insert_data_empty()
 BEGIN
