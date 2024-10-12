@@ -56,7 +56,7 @@ resource "aws_db_subnet_group" "private_subnets" {
 resource "aws_rds_cluster_instance" "write_instance" {
   identifier              = "aurora-mysql-write"
   cluster_identifier      = aws_rds_cluster.aurora_mysql.id
-  instance_class          = "db.t3.medium"
+  instance_class          = "db.r5.large"
   engine                  = "aurora-mysql"
   engine_version          = "5.7.mysql_aurora.2.11.5"
   db_parameter_group_name = aws_db_parameter_group.aurora_mysql_db_param_group_57.name
@@ -72,7 +72,7 @@ resource "aws_rds_cluster_instance" "write_instance" {
 resource "aws_rds_cluster_instance" "read_instance" {
   identifier              = "aurora-mysql-read"
   cluster_identifier      = aws_rds_cluster.aurora_mysql.id
-  instance_class          = "db.t3.medium"
+  instance_class          = "db.r5.large"
   engine                  = "aurora-mysql"
   engine_version          = "5.7.mysql_aurora.2.11.5"
   db_parameter_group_name = aws_db_parameter_group.aurora_mysql_db_param_group_57.name
