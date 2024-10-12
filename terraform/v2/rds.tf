@@ -76,7 +76,6 @@ resource "aws_rds_cluster" "aurora_mysql" {
 
   tags = {
     Name            = "aurora-mysql-blue-green-cluster"
-    devops-guru-rds = "ture"
   }
 }
 
@@ -109,7 +108,7 @@ resource "aws_rds_cluster_instance" "write_instance" {
 
   tags = {
     Name            = "aurora-mysql-write-instance"
-    devops-guru-rds = "ture"
+    devops-guru-rds = "aurora-mysql-write"
   }
 }
 
@@ -132,7 +131,7 @@ resource "aws_rds_cluster_instance" "read_instance" {
 
   tags = {
     Name            = "aurora-mysql-read-instance"
-    devops-guru-rds = "ture"
+    devops-guru-rds = "aurora-mysql-read"
   }
 }
 
