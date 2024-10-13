@@ -1,0 +1,363 @@
+{
+    "serverAddress": "/tmp%2Fmysql.sock",
+    "serverVersion": "5.7.12-log - MySQL Community Server (GPL)",
+    "targetVersion": "8.0.32",
+    "auroraServerVersion": "2.11.5",
+    "auroraTargetVersion": "3.05.2",
+    "outfilePath": "/rdsdbdata/tmp/PreChecker.log",
+    "checksPerformed": [
+        {
+            "id": "oldTemporalCheck",
+            "title": "Usage of old temporal type",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "routinesSyntaxCheck",
+            "title": "MySQL 8.0 syntax check for routine-like objects",
+            "status": "OK",
+            "description": "The following objects did not pass a syntax check with the latest MySQL 8.0 grammar. A common reason is that they reference names that conflict with new reserved keywords. You must update these routine definitions and `quote` any such references before upgrading.",
+            "documentationLink": "https://dev.mysql.com/doc/refman/en/keywords.html",
+            "detectedProblems": [
+                {
+                    "level": "Error",
+                    "dbObject": "cube.insert_data_empty",
+                    "description": "at line 4,16: unexpected token 'empty'"
+                }
+            ]
+        },
+        {
+            "id": "reservedKeywordsCheck",
+            "title": "Usage of db objects with names conflicting with new reserved keywords",
+            "status": "OK",
+            "description": "Warning: The following objects have names that conflict with new reserved keywords. Ensure queries sent by your applications use `quotes` when referring to them or they will result in errors.",
+            "documentationLink": "https://dev.mysql.com/doc/refman/en/keywords.html",
+            "detectedProblems": [
+                {
+                    "level": "Warning",
+                    "dbObject": "cube",
+                    "description": "Schema name"
+                },
+                {
+                    "level": "Warning",
+                    "dbObject": "cube.empty",
+                    "description": "Table name"
+                },
+                {
+                    "level": "Warning",
+                    "dbObject": "cube.empty.lag",
+                    "description": "Column name"
+                },
+                {
+                    "level": "Warning",
+                    "dbObject": "cube.empty.lead",
+                    "description": "Column name"
+                },
+                {
+                    "level": "Warning",
+                    "dbObject": "cube.empty.of",
+                    "description": "Column name"
+                },
+                {
+                    "level": "Warning",
+                    "dbObject": "cube.empty.rank",
+                    "description": "Column name"
+                }
+            ]
+        },
+        {
+            "id": "utf8mb3Check",
+            "title": "Usage of utf8mb3 charset",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "mysqlSchemaCheck",
+            "title": "Table names in the mysql schema conflicting with new tables in 8.0",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "foreignKeyLengthCheck",
+            "title": "Foreign key constraint names longer than 64 characters",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "maxdbFlagCheck",
+            "title": "Usage of obsolete MAXDB sql_mode flag",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "sqlModeFlagCheck",
+            "title": "Usage of obsolete sql_mode flags",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "enumSetElementLenghtCheck",
+            "title": "ENUM/SET column definitions containing elements longer than 255 characters",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "partitionedTablesInSharedTablespaceCheck",
+            "title": "Usage of partitioned tables in shared tablespaces",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "circularDirectoryCheck",
+            "title": "Circular directory references in tablespace data file paths",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "removedFunctionsCheck",
+            "title": "Usage of removed functions",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "groupByAscCheck",
+            "title": "Usage of removed GROUP BY ASC/DESC syntax",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "depreciatedSyntaxCheck",
+            "title": "Usage of depreciated keywords in definition",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "zeroDatesCheck",
+            "title": "Zero Date, Datetime, and Timestamp values",
+            "status": "OK",
+            "description": "Warning: By default zero date/datetime/timestamp values are no longer allowed in MySQL, as of 5.7.8 NO_ZERO_IN_DATE and NO_ZERO_DATE are included in SQL_MODE by default. These modes should be used with strict mode as they will be merged with strict mode in a future release. If you do not include these modes in your SQL_MODE setting, you are able to insert date/datetime/timestamp values that contain zeros. It is strongly advised to replace zero values with valid ones, as they may not work correctly in the future.",
+            "documentationLink": "https://lefred.be/content/mysql-8-0-and-wrong-dates/",
+            "detectedProblems": [
+                {
+                    "level": "Warning",
+                    "dbObject": "global.sql_mode",
+                    "description": "does not contain either NO_ZERO_DATE or NO_ZERO_IN_DATE which allows insertion of zero dates"
+                },
+                {
+                    "level": "Warning",
+                    "dbObject": "session.sql_mode",
+                    "description": " of 8 session(s) does not contain either NO_ZERO_DATE or NO_ZERO_IN_DATE which allows insertion of zero dates"
+                }
+            ]
+        },
+        {
+            "id": "schemaInconsistencyCheck",
+            "title": "Schema inconsistencies resulting from file removal or corruption",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "engineMixupCheck",
+            "title": "Tables recognized by InnoDB that belong to a different engine",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraGetDanglingFulltextIndex",
+            "title": "Tables with dangling FULLTEXT index reference",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "getMismatchedMetadata",
+            "title": "Column definition mismatch between InnoDB Data Dictionary and actual table definition.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "getEventsWithNullDefiner",
+            "title": "The definer column for mysql.event cannot be null or blank.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "getDuplicateTriggers",
+            "title": "MySQL pre-checks that all trigger names in a database are unique or not.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "getValueOfVariablelower_case_table_names",
+            "title": "MySQL pre-checks that all database or table names are lowercase when the lower_case_table_names parameter is set to 1.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "getTriggersWithNullDefiner",
+            "title": "The definer column for information_schema.triggers cannot be null or blank.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "checkTableOutput",
+            "title": "Issues reported by 'check table x for upgrade' command",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "checkTableMysqlSchema",
+            "title": "Issues reported by 'check table x for upgrade' command for mysql schema.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraCheckRdsUpgradePrechecksTable",
+            "title": "Check existence of mysql.rds_upgrade_prechecks table",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraCheckDDLRecovery",
+            "title": "Check for artifacts related to Aurora DDL recovery feature",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForMasterUser",
+            "title": "Check if master user exists",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForSysSchemaObjectTypeMismatch",
+            "title": "Check object type mismatch for sys schema.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraFODUpgradeCheck",
+            "title": "Check for artifacts related to Aurora fast DDL feature",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckIndexLengthLimitOnTinyColumns",
+            "title": "Check for the tables with indexes defined with prefix length greater than 255 bytes on tiny columns",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckMissingInnodbMetadataForMysqlHostTable",
+            "title": "Check missing innodb metadata inconsistency for mysql.host table",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForViewColumnNameLength",
+            "title": "Check for upperbound limit related to column name in view.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForIncompleteXATransactions",
+            "title": "Pre-checks for XA Transactions in prepared state.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForFtsSpaceIdZero",
+            "title": "Check for fulltext index with space id as zero",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForPrefixIndexOnGeometryColumns",
+            "title": "Check for geometry columns on prefix indexs",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForRollbackSegmentHistoryLength",
+            "title": "Checks if the rollback segment history length for the cluster is high",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForInstanceLimit",
+            "title": "Checks if upgrade is supported on the current instance class",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForUncommittedRowModifications",
+            "title": "Checks if there are many uncommitted modifications to rows",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForSpecialCharactersInProcedures",
+            "title": "Check for inconsistency related to special characters in stored procedures.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForDatafilePathInconsistency",
+            "title": "Check for inconsistency related to ibd file path.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "auroraUpgradeCheckForInternalUsers",
+            "title": "Check for 8.0 internal users.",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "defaultAuthenticationPlugin",
+            "title": "New default authentication plugin considerations",
+            "description": "Warning: The new default authentication plugin 'caching_sha2_password' offers more secure password hashing than previously used 'mysql_native_password' (and consequent improved client connection authentication). However, it also has compatibility implications that may affect existing MySQL installations.  If your MySQL installation must serve pre-8.0 clients and you encounter compatibility issues after upgrading, the simplest way to address those issues is to reconfigure the server to revert to the previous default authentication plugin (mysql_native_password). For example, use these lines in the server option file:\n\n[mysqld]\ndefault_authentication_plugin=mysql_native_password\n\nHowever, the setting should be viewed as temporary, not as a long term or permanent solution, because it causes new accounts created with the setting in effect to forego the improved authentication security.\nIf you are using replication please take time to understand how the authentication plugin changes may impact you.",
+            "documentationLink": "https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password-compatibility-issues\nhttps://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password-replication"
+        },
+        {
+            "id": "columnsWhichCannotHaveDefaultsCheck",
+            "title": "Columns which cannot have default values",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "mysqlInvalid57NamesCheck",
+            "title": "Check for invalid table names and schema names used in 5.7",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "mysqlOrphanedRoutinesCheck",
+            "title": "Check for orphaned routines in 5.7",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "mysqlDollarSignNameCheck",
+            "title": "Check for deprecated usage of single dollar signs in object names",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "mysqlIndexTooLargeCheck",
+            "title": "Check for indexes that are too large to work on higher versions of MySQL Server than 5.7",
+            "status": "OK",
+            "detectedProblems": []
+        },
+        {
+            "id": "mysqlEmptyDotTableSyntaxCheck",
+            "title": "Check for deprecated '.<table>' syntax used in routines.",
+            "status": "OK",
+            "detectedProblems": []
+        }
+    ],
+    "errorCount": 1,
+    "warningCount": 9,
+    "noticeCount": 0,
+    "Summary": "1 errors were found. Please correct these issues before upgrading to avoid compatibility issues."
+}
+
